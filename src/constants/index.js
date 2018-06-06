@@ -1,3 +1,5 @@
-export const HOST = process.env === 'production' ? 'https://yumehub.samuraime.com' : 'http://localhost:3000';
+/* eslint-disable import/prefer-default-export */
 
-export default {};
+export const HOST = process.env.NODE_ENV === 'production'
+  ? 'https://yumehub.samuraime.com'
+  : 'http://localhost:3000';
