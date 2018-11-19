@@ -4,7 +4,7 @@
       class="textarea-field"
       maxlength="-1"
       placeholder="Write something..."
-      v-model.lazy="text"
+      v-model="text"
     />
     <location-field v-model="location" />
     <view class="options">
@@ -47,32 +47,29 @@ export default {
 
   methods: {
     handlePost() {
-      // input, textarea直接双向绑定会存在光标重置
-      setTimeout(() => {
-        wx.showLoading();
-        request.post('/yumes', this.getForm()).then(() => {
-          wx.switchTab({
-            url: '/pages/index/main',
-          });
-          store.commit('setDraft', null);
-          Object.assign(this, {
-            text: '',
-            images: [],
-            location: {
-              name: '',
-              latitude: null,
-              longitude: null,
-            },
-            public: true,
-          });
-        }).catch((error) => {
-          wx.showToast({
-            title: error.message,
-          });
-        }).finally(() => {
-          wx.hideLoading();
+      wx.showLoading();
+      request.post('/yumes', this.getForm()).then(() => {
+        wx.switchTab({
+          url: '/pages/index/main',
         });
-      }, 100);
+        store.commit('setDraft', null);
+        Object.assign(this, {
+          text: '',
+          images: [],
+          location: {
+            name: '',
+            latitude: null,
+            longitude: null,
+          },
+          public: true,
+        });
+      }).catch((error) => {
+        wx.showToast({
+          title: error.message,
+        });
+      }).finally(() => {
+        wx.hideLoading();
+      });
     },
     getForm() {
       const formKeys = [

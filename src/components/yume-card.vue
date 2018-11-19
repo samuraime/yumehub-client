@@ -8,7 +8,13 @@
       </view>
     </view>
     <view class="content">
-      {{text}}
+      <view
+        v-for="(item, index) in paragraphs"
+        :key="index"
+        class="paragraph"
+      >
+        {{item}}
+      </view>
     </view>
     <view class="footer">
       <view class="action" @click="toggleThumbup">
@@ -51,6 +57,10 @@ export default {
   computed: {
     createdTime() {
       return formatTime(this.createdAt);
+    },
+
+    paragraphs() {
+      return this.text.split('\n');
     },
   },
 
@@ -99,6 +109,11 @@ export default {
 .content {
   padding: 0 20rpx 20rpx;
   font-size: 32rpx;
+}
+.paragraph:not(:last-child) {
+  display: inline-block;
+  word-break: break-all;
+  margin-bottom: 10rpx;
 }
 .footer {
   display: flex;
